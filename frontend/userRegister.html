@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .registration-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        .registration-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .registration-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .registration-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .registration-container button:hover {
+            background-color: #45a049;
+        }
+
+        .registration-container p {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #error-message, #success-message {
+            text-align: center;
+            display: none;
+            margin-top: 10px;
+        }
+
+        #error-message {
+            color: red;
+        }
+
+        #success-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="registration-container">
+        <h2>User Registration</h2>
+        <form id="registrationForm">
+            <input type="text" id="name" placeholder="Enter your Full Name" required>
+            <input type="email" id="email" placeholder="Enter your Email" required>
+            <input type="password" id="password" placeholder="Enter your Password" required>
+
+            <!-- Address Fields -->
+            <input type="text" id="streetAddress" placeholder="Enter your Street Address" required>
+            <input type="text" id="city" placeholder="Enter your City" required>
+            <input type="text" id="state" placeholder="Enter your State" required>
+            <input type="text" id="postalCode" placeholder="Enter your Postal Code" required>
+            <input type="text" id="country" placeholder="Enter your Country" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p id="error-message"></p>
+        <p id="success-message"></p>
+        <p>Already have an account? <a href="userLogin.html">Login here</a></p>
+    </div>
+
+    <script>
+      document.getElementById("registrationForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const street = document.getElementById("streetAddress").value;
+    const city = document.getElementById("city").value;
+    const state = document.getElementById("state").value;
+    const postal_code = document.getElementById("postalCode").value;
+
+    const registrationData = { name, email, password, street, city, state, postal_code };
+
+    fetch("http://localhost:3000/user-register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registrationData),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.error) {
+            document.getElementById("error-message").textContent = data.error;
+            document.getElementById("error-message").style.display = "block";
+            document.getElementById("success-message").style.display = "none";
+        } else {
+            document.getElementById("success-message").textContent = data.message;
+            document.getElementById("success-message").style.display = "block";
+            document.getElementById("error-message").style.display = "none";
+            setTimeout(() => {
+                window.location.href = "userLogin.html";
+            }, 1500);
+        }
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+        document.getElementById("error-message").textContent =
+            "An error occurred. Please try again.";
+        document.getElementById("error-message").style.display = "block";
+        document.getElementById("success-message").style.display = "none";
+    });
+});
+
+    </script>
+
+</body>
+</html>

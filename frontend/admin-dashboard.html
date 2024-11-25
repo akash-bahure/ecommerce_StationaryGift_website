@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!-- Admin Page Container -->
+    <div class="admin-container">
+
+        <!-- Sidebar / Vertical Navbar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/logo.png" alt="Admin Logo" class="admin-logo">
+                <h2 style="color: white;">Admin</h2>
+                <div class="line"></div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#dashboard"> Dashboard</a></li>
+                <div class="line"></div>
+
+
+
+                <li>
+                    <a href="#"><i class="fas fa-tasks"></i>product section  <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="viewproduct.html" id="viewproducts">view products</a></li>
+                        <li><a href="#" id="category">category</a></li>
+                        <li><a href="#" id="edit products">edit products</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li>
+                    <a href="#"><i class="fas fa-users"></i> Accounts 
+                        <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                    <ul class="dropdown" id="accountsDropdown">
+                        <li><a href="#" id="viewSellers">View Sellers</a></li>
+                        <li><a href="#" id="viewUsers">View Users</a></li>
+
+                    </ul>
+                </li>
+
+
+
+            </ul>
+        </nav>
+
+
+
+
+        <!-- Right Content Area -->
+        <div class="content-area">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="admin-info">
+                    <span>Admin</span>
+                    <img src="assets/u.png" alt="Admin Picture" class="admin-pic">
+                    <a href="adminlogin.html" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content" id="dashboard">
+                <h1>Admin Dashboard</h1>
+
+            
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+        
+
+
+
+        <script>
+
+            // Navigation logic for dropdown options
+            document.getElementById('viewSellers').addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default link behavior
+                window.location.href = 'sellers.html';
+            });
+
+            document.getElementById('viewUsers').addEventListener('click', (event) => {
+                event.preventDefault();
+                window.location.href = 'Users.html';
+            });
+
+
+
+
+
+
+
+
+        </script>
+</body>
+
+</html>

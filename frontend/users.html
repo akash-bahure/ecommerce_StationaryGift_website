@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers List</title>
+    <link rel="stylesheet" href="styles/category.css">
+    <style>
+      
+    </style>
+</head>
+<body>
+    <h1>Users List</h1>
+
+    <!-- Search Box Container -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by email" onkeyup="filterTeachers()">
+    </div>
+
+    <table id="teachersTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>Email</th>
+                <th>Street</th>
+                <th>city</th>
+                <th>State</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be inserted here -->
+        </tbody>
+    </table>
+    <a href="admin-dashboard.html" class="back">Back</a>
+
+    <script>
+        const apiUrl = 'http://localhost:3000/api/users'; // Update with your backend API
+        let teachersData = []; // To store the fetched teachers data
+
+        // Fetch and display teachers data
+        function fetchTeachers() {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error fetching teachers data: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    teachersData = data; // Store the fetched teachers data
+                    displayTeachers(data); // Display the data in the table
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Failed to fetch teachers data. Check the console for details.');
+                });
+        }
+
+        // Display user in the table
+        function displayTeachers(teachers) {
+            const tableBody = document.querySelector('#teachersTable tbody');
+            tableBody.innerHTML = ''; // Clear previous content
+
+            teachers.forEach(teacher => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${teacher.id}</td>
+                    <td>${teacher.name}</td>
+                    <td>${teacher.email}</td>
+                    <td>${teacher.street}</td>
+                    <td>${teacher.city}</td>
+                    <td>${teacher.state}</td>
+
+                    <td><button class="delete-btn back" data-id="${teacher.id}">Delete</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Attach delete event listeners to each delete button
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', deleteTeacher);
+            });
+        }
+
+        // Function to delete a user
+        function deleteTeacher(event) {
+            const teacherId = event.target.getAttribute('data-id');
+
+            fetch(`${apiUrl}/${teacherId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error deleting teacher: ' + response.statusText);
+                    }
+                    // Show success alert
+                    alert('Deleted successfully!');
+                    // Re-fetch teachers after deletion for real-time update
+                    fetchTeachers();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Failed to delete teacher. Check the console for details.');
+                });
+        }
+
+        // Function to filter teachers based on email search
+        function filterTeachers() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredTeachers = teachersData.filter(teacher => 
+                teacher.email.toLowerCase().includes(searchInput)
+            );
+            displayTeachers(filteredTeachers);
+        }
+
+        // Initial fetch of teachers data
+        fetchTeachers();
+    </script>
+</body>
+</html>

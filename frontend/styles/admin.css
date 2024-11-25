@@ -1,0 +1,235 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: Arial, sans-serif; */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    overflow: hidden; /* Prevent body overflow */
+    
+}
+
+/* Admin Container */
+.admin-container {
+    display: flex;
+    width: 100%;
+    height: 100vh; /* Full viewport height for proper layout */
+}
+
+/* Sidebar (Vertical Navbar) */
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    /* padding: 20px; */
+    color: #fff;
+    position: fixed; /* Make sidebar sticky */
+    top: 0;
+    bottom: 0;
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+}
+
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 12px 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.sidebar-header h2{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.admin-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.line {
+    width: 90%; /* Adjust width as needed */
+    border-bottom: 1px solid white; /* Thin white line */
+    margin-top: 10px; /* Space above the line */
+}
+
+.nav-links {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.dropdown {
+    padding: 20px;
+}
+
+.dropdown li a {
+    padding: 12px;
+}
+
+.nav-links a {
+    padding: 40px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.nav-links a:hover {
+    color: #00BFFF;
+}
+
+.nav-links a i {
+    margin-right: 10px;
+    margin-left: 6px;
+}
+
+.dropdown {
+    list-style: none;
+    padding-left: 50px;
+    display: none;
+    background-color: rgb(20, 9, 9);
+    color: black;
+}
+
+.dropdown li a {
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.dropdown-icon {
+    float: right;
+}
+
+.nav-links li:hover .dropdown {
+    display: block;
+}
+
+/* Content Area */
+.content-area {
+    margin-left: 250px; /* Offset content area by sidebar width */
+    padding: 20px;
+    width: calc(100% - 250px);
+    overflow-y: auto; /* Make content scrollable */
+    height: 100vh; /* Full viewport height */
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    background-color: lightblue;
+    padding: 10px 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Ensure top bar remains visible */
+    top: 0;
+    z-index: 100;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+}
+
+.admin-info span {
+    padding-right: 6px;
+}
+
+.admin-info .admin-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.logout {
+    margin-right: 30px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 2px;
+    border-radius: 4px;
+    background-color: #00BFFF;
+}
+
+.logout:hover {
+    color: #f00;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    margin-top: 20px;
+    padding: 20px;
+    height: auto;
+}
+
+.dashboard-content h1 {
+    font-size: 28px;
+    margin: 30px 0px;
+}
+
+.info-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: green;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.info-box {
+    background-color: #fff;
+    padding: 20px;
+    width: 32%;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 8px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.blue {
+    color: #00BFFF;
+}
+
+.info-box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.info-box p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+@media screen and (max-width: 768px) {
+    .info-box {
+        width: 100%;
+    }
+
+    .content-area {
+        margin-left: 0; /* Adjust content for smaller screens */
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+}
+
+
+
+
+

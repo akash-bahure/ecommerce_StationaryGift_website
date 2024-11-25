@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students List</title>
+    <link rel="stylesheet" href="styles/category.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <h1>Seller List</h1>
+
+    <!-- Search Box Container -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by email" onkeyup="filterStudents()">
+    </div>
+
+    <table id="studentsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be inserted here -->
+        </tbody>
+    </table>
+    <a href="admin-dashboard.html" class="back">Back</a>
+
+    <script>
+        const apiUrl = 'http://localhost:3000/api/sellers'; // Update with your backend API
+        let studentsData = []; // To store the fetched students data
+
+        // Fetch and display students data
+        function fetchStudents() {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error fetching sellers data: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    studentsData = data; 
+                    displayStudents(data); 
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Failed to fetch seller data. Check the console for details.');
+                });
+        }
+
+        // Display students in the table
+        function displayStudents(students) {
+            const tableBody = document.querySelector('#studentsTable tbody');
+            tableBody.innerHTML = ''; // Clear previous content
+
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.username}</td>
+                    <td>${student.email}</td>
+                    <td><button class="delete-btn back"  data-id="${student.id}">Delete</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Attach delete event listeners to each delete button
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', deleteStudent);
+            });
+        }
+
+        // Function to delete a student
+        function deleteStudent(event) {
+            const studentId = event.target.getAttribute('data-id');
+
+            fetch(`${apiUrl}/${studentId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error deleting student: ' + response.statusText);
+                    }
+                    // Show success alert
+                    alert('Deleted successfully!');
+                    // Re-fetch students after deletion for real-time update
+                    fetchStudents();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Failed to delete student. Check the console for details.');
+                });
+        }
+
+        // Function to filter students based on email search
+        function filterStudents() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredStudents = studentsData.filter(student => 
+                student.email.toLowerCase().includes(searchInput)
+            );
+            displayStudents(filteredStudents);
+        }
+
+        // Initial fetch of students data
+        fetchStudents();
+    </script>
+</body>
+</html>
